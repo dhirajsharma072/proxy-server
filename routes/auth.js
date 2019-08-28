@@ -4,5 +4,4 @@ const router = express.Router()
 
 router.post('/auth/token', authController.createToken)
 
-
 module.exports = router

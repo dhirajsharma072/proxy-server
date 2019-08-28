@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', authRouter)
 
-app.use('/ai_module/api/analyzer',analyzerRouter)
+app.use('/ai_module/api/analyzer',AuthController.verifyToken,analyzerRouter)
 
 app.use((err, req, res, next) => {
     const error = {
