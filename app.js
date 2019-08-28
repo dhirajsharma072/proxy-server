@@ -5,6 +5,7 @@ const http = require('http');
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const authRouter = require('./routes/auth')
+const analyzerRouter = require('./routes/analyzer')
 
 const app = express()
 app.server = http.createServer(app)
@@ -16,6 +17,8 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', authRouter)
+app.use('/ai_module/api/analyzer', analyzerRouter)
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
