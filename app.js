@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const authRouter = require('./routes/auth')
 const analyzerRouter = require('./routes/analyzer')
-
+const AuthController= require('./controllers/auth')
 const app = express()
 app.server = http.createServer(app)
 
@@ -17,14 +17,8 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', authRouter)
-app.use('/ai_module/api/analyzer', analyzerRouter)
 
-
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-    next(createError(404))
-})
-
+app.use('/ai_module/api/analyzer',analyzerRouter)
 
 app.use((err, req, res, next) => {
     const error = {
@@ -34,6 +28,11 @@ app.use((err, req, res, next) => {
     res.status(err.status).json(error);
 });
 
+
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+    next(createError(404))
+})
 
 const listener = app.server.listen(process.env.PORT || 3000, '127.0.0.1', () => {
     console.log(`Server started on  http://${listener.address().address + ':' + listener.address().port}`);
